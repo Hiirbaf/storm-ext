@@ -85,7 +85,7 @@ class DoramasYTProvider : MainAPI() {
                 }, isHorizontal)
         )
 
-        urls.apmap { (url, name) ->
+        urls.amap { (url, name) ->
             //val posterdoc = if (url.contains("/emision")) "img" else ".anithumb img"
             val home = app.get(url).document.select("li.col").map {
                 val title = it.selectFirst("h3")!!.text()

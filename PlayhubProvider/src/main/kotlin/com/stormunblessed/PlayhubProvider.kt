@@ -232,11 +232,11 @@ class PlayhubProvider:MainAPI() {
         val recs = ArrayList<SearchResponse>()
 
         if (type == TvType.TvSeries) {
-            res.seasons?.apmap { mainInfo ->
+            res.seasons?.amap { mainInfo ->
                 val seasonurl = "${playhubAPI}seasons/${mainInfo.serieId}/${mainInfo.seasonNumber}"
                 val seasonres = app.get(seasonurl, headers = playhubHeaders).parsed<SeasonsInfo>()
                 val seriesID = mainInfo.serieId
-                seasonres.episodes?.apmap { ep ->
+                seasonres.episodes?.amap { ep ->
                     val eptitle = ep.name
                     val epthumb = getImageUrl(ep.stillPath)
                     val epPlot = ep.overview

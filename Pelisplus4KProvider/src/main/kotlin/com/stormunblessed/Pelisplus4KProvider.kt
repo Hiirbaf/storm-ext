@@ -28,7 +28,7 @@ class Pelisplus4KProvider :MainAPI() {
             Pair("Animes", "$mainUrl/animes"),
         )
 
-        urls.apmap { (name, url) ->
+        urls.amap { (name, url) ->
             val doc = app.get(url).document
             val home = doc.select(".articlesList article").map {
                 val title = it.selectFirst("a h2")?.text()

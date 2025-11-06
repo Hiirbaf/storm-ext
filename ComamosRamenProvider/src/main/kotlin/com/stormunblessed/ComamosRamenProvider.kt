@@ -62,7 +62,7 @@ class ComamosRamenProvider : MainAPI() {
     override suspend fun getMainPage(page: Int, request : MainPageRequest): HomePageResponse {
         val items = ArrayList<HomePageList>()
         val urls = listOf("https://comamosramen.com")
-        urls.apmap { url ->
+        urls.amap { url ->
             val doc = app.get(url).document
             doc.select("script[type=application/json]").map { script ->
                 if (script.data().contains("pageProps")) {
@@ -288,7 +288,7 @@ class ComamosRamenProvider : MainAPI() {
             val episodeID = info.EpisodeID
             val seasonID = info.SeasonID
             if (seasonID == seasonid && episodeID == epID) {
-                info.Servers.apmap { servers ->
+                info.Servers.amap { servers ->
                     val validserver = servers.name
                         ?.replace("SB","https://sbplay2.xyz/e/")
                         ?.replace("dood","https://dood.la/e/")

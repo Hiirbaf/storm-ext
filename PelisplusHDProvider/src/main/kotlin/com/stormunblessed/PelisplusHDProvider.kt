@@ -147,7 +147,7 @@ class PelisplusHDProvider : MainAPI() {
                             Embed69Extractor.load(frameLink, data, subtitleCallback, callback)
                         } else {
                             val regex = """(go_to_player|go_to_playerVast)\('(.*?)'""".toRegex()
-                            regex.findAll(app.get(frameLink).document.html()).toList().apmap {
+                            regex.findAll(app.get(frameLink).document.html()).toList().amap {
                                 val current = it?.groupValues?.get(2) ?: ""
                                 var link: String? = null
                                 if (URLUtil.isValidUrl(current)) {

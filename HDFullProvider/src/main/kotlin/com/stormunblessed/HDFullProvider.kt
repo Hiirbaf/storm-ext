@@ -43,10 +43,10 @@ class HDFullProvider : MainAPI() {
 //            Pair("Top IMDB", "$mainUrl/peliculas/imdb_rating"),
             Pair("Series", "$mainUrl/series"),
         )
-        urls.apmap { (name, url) ->
+        urls.amap { (name, url) ->
             val doc = app.get(url, cookies = latestCookie).document
             val home =
-                doc.select("div.center div.view").apmap {
+                doc.select("div.center div.view").amap {
                     val title = it.selectFirst("h5.left a.link")?.attr("title")
                     val link = it.selectFirst("h5.left a.link")?.attr("href")
                         ?.replaceFirst("/", "$mainUrl/")
@@ -157,7 +157,7 @@ class HDFullProvider : MainAPI() {
                             )
                     )
                     val episodesJson = AppUtils.parseJson<List<EpisodeJson>>(result.document.text())
-                    episodesJson.apmap {
+                    episodesJson.amap {
                         val episodeNumber = it.episode?.toIntOrNull()
                         val epTitle = it.title?.es?.trim() ?: "Episodio $episodeNumber"
                         val epurl = "$url/temporada-${it.season}/episodio-${it.episode}"

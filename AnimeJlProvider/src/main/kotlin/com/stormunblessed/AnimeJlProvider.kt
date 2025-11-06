@@ -27,7 +27,7 @@ class AnimeJlProvider : MainAPI() {
             Pair("Peliculas", "$mainUrl/animes?tipo[]=3&order=updated"),
         )
 
-        urls.apmap { (name, url) ->
+        urls.amap { (name, url) ->
             val doc = app.get(url).document
             val home = doc.select("ul.ListAnimes li").map {
                 val title = it.selectFirst("article.Anime h3.Title")?.text()
@@ -131,7 +131,7 @@ class AnimeJlProvider : MainAPI() {
         val regex = """(<iframe src=)"(.*?)"""".toRegex()
         app.get(data).document.select("script")
             .firstOrNull { it.html().contains("var video = [];") }?.let { frameUrl ->
-            regex.findAll(frameUrl.html()).map { it.groupValues.get(2) }.toList().apmap {
+            regex.findAll(frameUrl.html()).map { it.groupValues.get(2) }.toList().amap {
                 loadExtractor(it, data, subtitleCallback, callback)
             }
         }

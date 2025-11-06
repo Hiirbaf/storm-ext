@@ -138,7 +138,7 @@ class CinecalidadProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-         app.get(data).document.select(".linklist ul li").apmap {
+         app.get(data).document.select(".linklist ul li").amap {
              val url = it.select("li").attr("data-option")
              loadExtractor(url, mainUrl, subtitleCallback, callback)
          }

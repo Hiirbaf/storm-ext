@@ -42,7 +42,7 @@ class AnimeflvIOProvider:MainAPI() {
 
             }
         }))
-        urls.apmap { (url, name) ->
+        urls.amap { (url, name) ->
             val soup = app.get(url).document
             val home = soup.select("div.item-pelicula").map {
                 val title = it.selectFirst(".item-detail p")?.text() ?: ""
@@ -182,7 +182,7 @@ class AnimeflvIOProvider:MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        app.get(data).document.select("li.tab-video").apmap {
+        app.get(data).document.select("li.tab-video").amap {
             val url = fixUrl(it.attr("data-video"))
             if (url.contains("animeid")) {
                 val ajaxurl = url.replace("streaming.php","ajax.php")
@@ -195,7 +195,7 @@ class AnimeflvIOProvider:MainAPI() {
                             source.file,
                             "https://animeid.to",
                             headers = mapOf("Referer" to "https://animeid.to")
-                        ).apmap {
+                        ).amap {
                             callback(
                                 newExtractorLink(
                                     "Animeflv.io",

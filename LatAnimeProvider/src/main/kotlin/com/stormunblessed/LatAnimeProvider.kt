@@ -77,7 +77,7 @@ class LatAnimeProvider : MainAPI() {
 //                        }, isHorizontal)
 //        )
 
-        urls.apmap { (url, name) ->
+        urls.amap { (url, name) ->
             val home = appGetChildMainUrl(url).document.select("html body div.container div.row div.col-md-4.col-lg-3.col-xl-2.col-6.my-3").map {
                 val title = it.selectFirst("div.col-md-4.col-lg-3.col-xl-2.col-6.my-3 a div.series div.seriedetails h3.my-1")!!.text()
                 val imgElement = it.selectFirst("div.col-md-4.col-lg-3.col-xl-2.col-6.my-3 a div.series div.serieimg.shadown img.img-fluid2.shadow-sm")

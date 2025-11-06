@@ -153,7 +153,7 @@ open class BflixProvider : MainAPI() {
             ),
         )
 
-        testa.apmap {(name, element) ->
+        testa.amap {(name, element) ->
             val test = soup.select(element).map {
                 val title = it.selectFirst("a.film-name")!!.text()
                 val link = fixUrl(it.selectFirst("a")!!.attr("href"))
@@ -439,7 +439,7 @@ data class TestingSubsItem(
             Pair(newSname, datalinkId)
         }
 
-        serversPair.apmap {(sName, sId) ->
+        serversPair.amap {(sName, sId) ->
             val encId = vrfHelper("fmovies-vrf",sId)
             val urlEnc = app.get("$mainUrl/ajax/server/$sId?vrf=$encId").parsed<Links>().result?.url
 
@@ -460,7 +460,7 @@ data class TestingSubsItem(
                     if (mediaUrl != null) {
                         val resultJson = app.get(mediaUrl, headers = mapOf("Referer" to ref)).parsed<BflixMediaInfo>()
                         val name = if (vids) "Vidplay" else "MyCloud"
-                        resultJson.result?.sources?.apmap {
+                        resultJson.result?.sources?.amap {
                             val source = it.file ?: ""
                             M3u8Helper.generateM3u8(
                                 name,
@@ -476,7 +476,7 @@ data class TestingSubsItem(
                 }
             }
             val subsUrl = app.get("$mainUrl/ajax/episode/subtitles/$dataClean").parsed<TestingSubs>()
-            subsUrl.apmap {
+            subsUrl.amap {
                 val subtitle = it.file ?: ""
                 val lang = it.label ?: ""
                 subtitleCallback.invoke(

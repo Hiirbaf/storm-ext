@@ -178,7 +178,7 @@ class ReyDonghuaProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        app.get(data).document.select("#myTab li").apmap {
+        app.get(data).document.select("#myTab li").amap {
             val encodedurl = it.select(".play-video").attr("data-player")
             val urlDecoded =
                 base64Decode(encodedurl).replace("https://playerwish.com", "https://streamwish.to")

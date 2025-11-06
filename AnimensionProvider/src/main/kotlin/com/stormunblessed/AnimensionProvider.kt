@@ -33,7 +33,7 @@ class AnimensionProvider:MainAPI() {
             Pair("Animes (SUB)","$mainUrl/public-api/index.php?page=1&mode=sub"),
             Pair("Animes (DUB)","$mainUrl/public-api/index.php?page=1&mode=dub"),
         )
-        links.apmap { (name, url) ->
+        links.amap { (name, url) ->
             val test = app.get(url).parsed<HomeInfo>()
             val sub = name.contains("(SUB)")
             val dub = name.contains("(DUB)")
@@ -130,7 +130,7 @@ class AnimensionProvider:MainAPI() {
             json.doodstream,
             json.xstreamcdn
         )
-        list.apmap {
+        list.amap {
             val link = it.replace("https://streamsss.net","https://watchsb.com").replace("https://fembed9hd.com","https://embedsito.com")
             println(link)
             if (link.contains("m3u8")) {

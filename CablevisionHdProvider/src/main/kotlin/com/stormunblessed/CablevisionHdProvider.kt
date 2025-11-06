@@ -174,7 +174,7 @@ class CablevisionHdProvider : MainAPI() {
                 Pair("24/7", mainUrl),
                 Pair("Todos", mainUrl),
         )
-        urls.apmap { (name, url) ->
+        urls.amap { (name, url) ->
             val doc = app.get(url).document
             val home = doc.select("div.p-2").filterNot { element ->
                 val text = element.selectFirst("p.des")?.text()

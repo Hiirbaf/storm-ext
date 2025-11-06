@@ -93,7 +93,7 @@ class SeriesMetroProvider: MainAPI() {
         }
         val tvType = if (url.contains("pelicula")) TvType.Movie else TvType.TvSeries
         val episodes = ArrayList<Episode>()
-        val episs = dataseason.apmap { season ->
+        val episs = dataseason.amap { season ->
             val response = app.post("$mainUrl/wp-admin/admin-ajax.php", data =
             mapOf(
                 "action" to "action_select_season",

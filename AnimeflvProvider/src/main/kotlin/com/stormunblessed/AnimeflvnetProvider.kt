@@ -61,7 +61,7 @@ class AnimeflvnetProvider : MainAPI() {
                 }, isHorizontal)
         )
 
-        urls.apmap { (url, name) ->
+        urls.amap { (url, name) ->
             val doc = app.get(url).document
             val home = doc.select("ul.ListAnimes li article").mapNotNull {
                 val title = it.selectFirst("h3.Title")?.text() ?: return@mapNotNull null
@@ -179,14 +179,14 @@ class AnimeflvnetProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        app.get(data).document.select("script").apmap { script ->
+        app.get(data).document.select("script").amap { script ->
             if (script.data().contains("var videos = {") || script.data()
                     .contains("var anime_id =") || script.data().contains("server")
             ) {
                 val serversRegex = Regex("var videos = (\\{\"SUB\":\\[\\{.*?\\}\\]\\});")
                 val serversplain = serversRegex.find(script.data())?.destructured?.component1() ?: ""
                 val json = parseJson<MainServers>(serversplain)
-                json.sub.apmap {
+                json.sub.amap {
                     val code = it.code
                     loadExtractor(code, data, subtitleCallback, callback)
                 }

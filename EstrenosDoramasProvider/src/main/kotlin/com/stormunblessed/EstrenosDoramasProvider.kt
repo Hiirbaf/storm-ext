@@ -36,7 +36,7 @@ class EstrenosDoramasProvider : MainAPI() {
 
         val items = ArrayList<HomePageList>()
 
-        urls.apmap { (url, name) ->
+        urls.amap { (url, name) ->
             val home = app.get(url, timeout = 120).document.select("div.clearfix").map {
                 val title = cleanTitle(it.selectFirst("h3 a")?.text()!!)
                 val poster = it.selectFirst("img.cate_thumb")?.attr("src")
@@ -182,7 +182,7 @@ class EstrenosDoramasProvider : MainAPI() {
             "Cache-Control" to "max-age=0",)
 
         val document = app.get(data).document
-        document.select("div.tab_container iframe").apmap { container ->
+        document.select("div.tab_container iframe").amap { container ->
             val directlink = fixUrl(container.attr("src"))
             loadExtractor(directlink, data, subtitleCallback, callback)
 
@@ -190,7 +190,7 @@ class EstrenosDoramasProvider : MainAPI() {
                 val amzregex = Regex("https:\\/\\/repro3\\.estrenosdoramas\\.us\\/repro\\/amz\\/examples\\/.*\\.php\\?key=.*\$")
                 amzregex.findAll(directlink).map {
                     it.value.replace(Regex("https:\\/\\/repro3\\.estrenosdoramas\\.us\\/repro\\/amz\\/examples\\/.*\\.php\\?key="),"")
-                }.toList().apmap { key ->
+                }.toList().amap { key ->
                     val response = app.post("https://repro3.estrenosdoramas.us/repro/amz/examples/player/api/indexDCA.php",
                         headers = headers,
                         data = mapOf(
@@ -219,7 +219,7 @@ class EstrenosDoramasProvider : MainAPI() {
                 val regex = Regex("(https:\\/\\/repro.\\.estrenosdoramas\\.us\\/repro\\/reproducir14\\.php\\?key=[a-zA-Z0-9]{0,8}[a-zA-Z0-9_-]+)")
                 regex.findAll(directlink).map {
                     it.value
-                }.toList().apmap {
+                }.toList().amap {
                     val doc = app.get(it).text
                     val videoid = doc.substringAfter("vid=\"").substringBefore("\" n")
                     val token = doc.substringAfter("name=\"").substringBefore("\" s")
@@ -242,7 +242,7 @@ class EstrenosDoramasProvider : MainAPI() {
                 val regex = Regex("(https:\\/\\/repro3.estrenosdoramas.us\\/repro\\/reproducir120\\.php\\?\\nkey=[a-zA-Z0-9]{0,8}[a-zA-Z0-9_-]+)")
                 regex.findAll(directlink).map {
                     it.value
-                }.toList().apmap {
+                }.toList().amap {
                     val doc = app.get(it).text
                     val videoid = doc.substringAfter("var videoid = '").substringBefore("';")
                     val token = doc.substringAfter("var tokens = '").substringBefore("';")

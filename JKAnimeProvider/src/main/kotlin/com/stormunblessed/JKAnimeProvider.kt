@@ -337,7 +337,7 @@ class JKAnimeProvider : MainAPI() {
                                 ),
                                 data = mapOf(Pair("data", gsplaykey)),
                                 allowRedirects = false
-                            ).okhttpResponse.headers.values("location").apmap { loc ->
+                            ).okhttpResponse.headers.values("location").amap { loc ->
                                 val postkey = loc.replace("/gsplay/player.html#", "")
                                 val nozomitext = app.post(
                                     "$mainUrl/gsplay/api.php",

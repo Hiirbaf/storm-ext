@@ -25,7 +25,7 @@ class SeriesflixProvider : MainAPI() {
             Pair("$mainUrl/genero/accion/", "Acción"),
             Pair("$mainUrl/genero/ciencia-ficcion/", "Ciencia ficción"),
         )
-        urls.apmap { (url, name) ->
+        urls.amap { (url, name) ->
             val soup = app.get(url).document
             val home = soup.select("article.TPost.B").map {
                 val title = it.selectFirst("h2.title")!!.text()
@@ -118,7 +118,7 @@ class SeriesflixProvider : MainAPI() {
 
             val episodeList = ArrayList<Episode>()
 
-            list.apmap { (seasonInt, seasonUrl) ->
+            list.amap { (seasonInt, seasonUrl) ->
                 val seasonDocument = app.get(seasonUrl).document
                 val episodes = seasonDocument.select("table > tbody > tr")
                 if (episodes.isNotEmpty()) {
@@ -181,7 +181,7 @@ class SeriesflixProvider : MainAPI() {
                val url =
                    "$mainUrl/?trembed=$serverID&trid=$movieID&trtype=$type" //This is to get the POST key value
                val doc1 = app.get(url).document
-               doc1.select("div.Video iframe").apmap {
+               doc1.select("div.Video iframe").amap {
                    val iframe = it.attr("src")
                    val postkey =
                        iframe.replace("https://sc.seriesflix.video/index.php?h=", "") // this obtains
@@ -206,13 +206,13 @@ class SeriesflixProvider : MainAPI() {
                     params = mapOf(Pair("h", postkey)),
                     data = mapOf(Pair("h", postkey)),
                     allowRedirects = false
-                ).okhttpResponse.headers.values("location").apmap { link ->
+                ).okhttpResponse.headers.values("location").amap { link ->
                     val url1 = link.replace("#bu", "")
                     loadExtractor(url1, data, subtitleCallback, callback)
                 }
             }
         } */
-        app.get(data).document.select("li div.Button.sgty").apmap {
+        app.get(data).document.select("li div.Button.sgty").amap {
             val encodedlink = it.attr("data-url")
             val decodelink = base64Decode(encodedlink)
             println("DECODE $decodelink")

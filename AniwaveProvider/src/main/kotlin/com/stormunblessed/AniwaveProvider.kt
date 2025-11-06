@@ -183,7 +183,7 @@ class AniwaveProvider : MainAPI() {
         }
         val duration = doc.selectFirst(".bmeta > div > div:contains(Duration:) > span")?.text()
 
-        Jsoup.parse(body).body().select(".episodes > ul > li > a").apmap { element ->
+        Jsoup.parse(body).body().select(".episodes > ul > li > a").amap { element ->
             val ids = element.attr("data-ids").split(",", limit = 3)
             val dataDub = element.attr("data-dub").toIntOrNull()
             val epNum = element.attr("data-num")
@@ -474,7 +474,7 @@ class AniwaveProvider : MainAPI() {
             val newSname = serverName(serverID)
             Pair(newSname, datalinkId)
         }
-        aas.apmap { (sName, sId) ->
+        aas.amap { (sName, sId) ->
             val nName = if (sName == null) "mycloud" else sName
             val vids = nName == "vidplay"
             val mclo = nName == "mycloud"
@@ -503,7 +503,7 @@ class AniwaveProvider : MainAPI() {
 
                     val resultJson = app.get(ssaeUrl, headers = mapOf("Referer" to ref)).parsedSafe<AniwaveMediaInfo>()
                     val name = if (vids) "Vidplay" else "MyCloud"
-                    resultJson?.result?.sources?.apmap {
+                    resultJson?.result?.sources?.amap {
                        val source = it.file ?: ""
                        generateM3u8(
                             name,
@@ -511,7 +511,7 @@ class AniwaveProvider : MainAPI() {
                            ref
                        ).forEach(callback)
                     }
-                    resultJson?.result?.tracks?.apmap {
+                    resultJson?.result?.tracks?.amap {
                         val subtitle = it.file ?: ""
                         val lang = it.label ?: ""
                         subtitleCallback.invoke(

@@ -41,7 +41,7 @@ class PelisplusSOProvider : MainAPI() {
                                         }
             }))
 
-            urls.apmap { (url, name) ->
+            urls.amap { (url, name) ->
                 val soup = app.get(url).document
                 val home = soup.select(".main-peliculas div.item-pelicula").map {
                     val title = it.selectFirst(".item-detail p")?.text() ?: ""
@@ -190,7 +190,7 @@ class PelisplusSOProvider : MainAPI() {
                 name,
                 m3u8,
                 mainUrl,
-        ).apmap {
+        ).amap {
             callback(
                 newExtractorLink(
                         name,
@@ -234,8 +234,8 @@ class PelisplusSOProvider : MainAPI() {
             Pair("Subtitulado",".server-item-0 li.tab-video"),
             Pair("Castellano",".server-item-2 li.tab-video"),
         )
-        elements.apmap { (lang, element) ->
-            document.select(element).apmap {
+        elements.amap { (lang, element) ->
+            document.select(element).amap {
                 val url = fixUrl(it.attr("data-video"))
                 if (url.contains("pelisplay.io")) {
                     val doc = app.get(url).document

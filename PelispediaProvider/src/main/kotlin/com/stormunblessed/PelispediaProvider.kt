@@ -25,7 +25,7 @@ class PelispediaProvider:MainAPI() {
             Pair("Películas","$mainUrl/cartelera-peliculas/"),
             Pair("Series","$mainUrl/cartelera-series/"),
         )
-        urls.apmap { (name, url) ->
+        urls.amap { (name, url) ->
             val doc = app.get(url).document
             val home =  doc.select("section.movies article").map {
                 val title = it.selectFirst("h2.entry-title")?.text() ?: ""
@@ -78,7 +78,7 @@ class PelispediaProvider:MainAPI() {
             Pair(seriesid, dataseason)
         }
         val epi = ArrayList<Episode>()
-        seasonsdoc.apmap {(serieid, data) ->
+        seasonsdoc.amap {(serieid, data) ->
             val seasonsrequest = app.post("https://pelispedia.is/wp-admin/admin-ajax.php",
                 data = mapOf(
                     "action" to "action_select_season",
@@ -151,7 +151,7 @@ class PelispediaProvider:MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        app.get(data).document.select(".player iframe").apmap {
+        app.get(data).document.select(".player iframe").amap {
             val trembedlink = it.attr("data-src")
             val tremrequest = app.get(trembedlink).document
             val link = tremrequest.selectFirst("div.Video iframe")!!.attr("src")

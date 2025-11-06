@@ -76,7 +76,7 @@ class MonoschinosProvider : MainAPI() {
                         }, isHorizontal)
         )
 
-        urls.apmap { (url, name) ->
+        urls.amap { (url, name) ->
 
             val home = app.get(url, timeout = 120).document.select("li.col").map {
                 val title = it.selectFirst("h3")!!.text()
@@ -187,7 +187,7 @@ class MonoschinosProvider : MainAPI() {
             subtitleCallback: (SubtitleFile) -> Unit,
             callback: (ExtractorLink) -> Unit
     ): Boolean {
-        app.get(data).document.select("#myTab li").apmap {
+        app.get(data).document.select("#myTab li").amap {
             val encodedurl = it.select(".play-video").attr("data-player")
             val urlDecoded = base64Decode(encodedurl)
             val url = (urlDecoded).replace("https://monoschinos2.com/reproductor?url=", "")

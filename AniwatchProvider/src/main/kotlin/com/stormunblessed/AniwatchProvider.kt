@@ -408,7 +408,7 @@ class AniwatchProvider : MainAPI() {
 //            "https://ws1.rapid-cloud.ru/socket.io/?EIO=4&transport=polling"
 
         // Prevent duplicates
-        serverstwo.distinctBy { it.second }.apmap {
+        serverstwo.distinctBy { it.second }.amap {
             val link =
                 "$mainUrl/ajax/v2/episode/sources?id=${it.second}"
             val extractorLink = app.get(

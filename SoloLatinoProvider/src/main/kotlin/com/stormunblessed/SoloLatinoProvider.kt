@@ -28,7 +28,7 @@ class SoloLatinoProvider : MainAPI() {
             Pair("Cartoons", "$mainUrl/genre_series/toons"),
         )
 
-        urls.apmap { (name, url) ->
+        urls.amap { (name, url) ->
             val tvType = when (name) {
                 "Peliculas" -> TvType.Movie
                 "Series" -> TvType.TvSeries
