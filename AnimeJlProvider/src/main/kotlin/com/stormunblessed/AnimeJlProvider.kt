@@ -5,6 +5,8 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.utils.AppUtils.parseJson
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 
 class AnimeJlProvider : MainAPI() {
     override var mainUrl = "https://www.anime-jl.net"
@@ -14,55 +16,53 @@ class AnimeJlProvider : MainAPI() {
     override val hasChromecastSupport = true
     override val hasDownloadSupport = true
     override val supportedTypes = setOf(
-        TvType.Movie,
         TvType.Anime,
     )
 
-    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse? {
-        val items = ArrayList<HomePageList>()
-        val urls = listOf(
-            Pair("Latino", "$mainUrl/animes?genre[]=46&order=updated"),
-            Pair("Animes", "$mainUrl/animes"),
-            Pair("Donghuas", "$mainUrl/animes?tipo[]=7&order=updated"),
-            Pair("Peliculas", "$mainUrl/animes?tipo[]=3&order=updated"),
-        )
+    override val mainPage = mainPageOf(
+        "animes?genre[]=46&order=updated" to "Latino",
+        "animes?" to "Animes",
+        "animes?tipo[]=7&order=updated" to "Donghuas",
+        "animes?tipo[]=3&order=updated" to "Peliculas",
+    )
 
-        urls.amap { (name, url) ->
-            val doc = app.get(url).document
-            val home = doc.select("ul.ListAnimes li").map {
-                val title = it.selectFirst("article.Anime h3.Title")?.text()
-                val link = it.selectFirst("article.Anime a")?.attr("href")
-                val img = it.selectFirst("article.Anime a div.Image figure img")?.attr("src")
-                    ?.replaceFirst("^/".toRegex(), "$mainUrl/")
-                newTvSeriesSearchResponse(
-                    title!!,
-                    link!!,
-                    TvType.Anime,
-                ){
-                    this.posterUrl = img
-                }
-            }
-            items.add(HomePageList(name, home))
+    override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
+        val document = app.get("$mainUrl/${request.data}&page=$page").document
+        val home = document.select("ul.ListAnimes li")
+            .mapNotNull { it.toSearchResult() }
+        return newHomePageResponse(
+            list = HomePageList(
+                name = request.name,
+                list = home,
+                isHorizontalImages = false
+            ),
+            hasNext = true
+        )
+    }
+
+    private fun Element.toSearchResult(): SearchResponse {
+        val title = this.select("article.Anime h3.Title").text()
+        val href = this.select("article.Anime a").attr("href")
+        val posterUrl = fixUrlNull(
+            this.select("article.Anime a div.Image figure img").attr("src")
+        )?.replaceFirst("^/".toRegex(), "$mainUrl/")
+        return newAnimeSearchResponse(title, href, TvType.Movie) {
+            this.posterUrl = posterUrl
+            addDubStatus(getDubStatus(href))
         }
-        return newHomePageResponse(items)
+    }
+
+    private fun getDubStatus(title: String): DubStatus {
+        return if (title.contains("-latino") || title.contains("-castellano"))
+            DubStatus.Dubbed
+        else DubStatus.Subbed
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
-        val url = "$mainUrl/animes?q=$query"
-        val doc = app.get(url).document
-        return doc.select("ul.ListAnimes li").map {
-            val title = it.selectFirst("article.Anime h3.Title")?.text()
-            val link = it.selectFirst("article.Anime a")?.attr("href")
-            val img = it.selectFirst("article.Anime a div.Image figure img")?.attr("src")
-                ?.replaceFirst("^/".toRegex(), "$mainUrl/")
-            newTvSeriesSearchResponse(
-                title!!,
-                link!!,
-                TvType.Anime,
-            ){
-                this.posterUrl = img
-            }
-        }
+        val document = app.get("$mainUrl/animes?q=$query").document
+        val results =
+            document.select("ul.ListAnimes li").mapNotNull { it.toSearchResult() }
+        return results
     }
 
     override suspend fun load(url: String): LoadResponse? {
@@ -101,7 +101,7 @@ class AnimeJlProvider : MainAPI() {
                 episodes.add(
                     newEpisode(
                         epurl,
-                    ){
+                    ) {
                         this.name = epTitle
                         this.season = 0
                         this.episode = epNum
@@ -122,20 +122,74 @@ class AnimeJlProvider : MainAPI() {
         }
     }
 
+    suspend fun followRedirectsJS(url: String): Document {
+        val redirectRegex = Regex("""window\.location\.href\s*=\s*"([^"]+)";""")
+        val doc = app.get(url).document
+        val redirectUrl = redirectRegex.find(doc.data())?.groupValues?.get(1)
+        if (redirectUrl != null) {
+            return followRedirectsJS(redirectUrl)
+        } else {
+            return doc;
+        }
+    }
+
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        val regex = """(<iframe src=)"(.*?)"""".toRegex()
         app.get(data).document.select("script")
             .firstOrNull { it.html().contains("var video = [];") }?.let { frameUrl ->
-            regex.findAll(frameUrl.html()).map { it.groupValues.get(2) }.toList().amap {
-                loadExtractor(it, data, subtitleCallback, callback)
+                fetchUrls(frameUrl.html()).filter { it.startsWith("https://holuagency.top/load.php?") }
+                    .amap {
+                        val doc = followRedirectsJS(it)
+                        val form = doc.selectFirst("form#link")
+                        val url = form?.attr("action")
+                        val token = form?.selectFirst("input[name=token]")?.attr("value")
+                        val back = form?.selectFirst("input[name=back]")?.attr("value")
+                        val sh = form?.selectFirst("input[name=sh]")?.attr("value")
+                        if (url != null) {
+                            val doc =
+                                app.post(
+                                    url,
+                                    data = mapOf("token" to token!!, "back" to back!!, "sh" to sh!!)
+                                ).document
+                            val containerFrameUrl =
+                                doc.selectFirst("a.cs-share__copy-link")?.attr("href")
+                            if (containerFrameUrl != null) {
+                                val doc = app.get(
+                                    containerFrameUrl,
+                                    cookies = mapOf("t" to token, "b" to back, "s" to sh)
+                                ).document
+                                doc.selectFirst("div#player iframe")?.attr("src")?.let {
+                                    loadExtractor(
+                                        fixHostsLinks(it),
+                                        data,
+                                        subtitleCallback,
+                                        callback
+                                    )
+                                }
+                            }
+                        }
+                    }
             }
-        }
         return true
     }
 
+}
+
+fun fixHostsLinks(url: String): String {
+    return url
+        .replaceFirst("https://hglink.to", "https://streamwish.to")
+        .replaceFirst("https://swdyu.com", "https://streamwish.to")
+        .replaceFirst("https://cybervynx.com", "https://streamwish.to")
+        .replaceFirst("https://dumbalag.com", "https://streamwish.to")
+        .replaceFirst("https://mivalyo.com", "https://vidhidepro.com")
+        .replaceFirst("https://dinisglows.com", "https://vidhidepro.com")
+        .replaceFirst("https://filemoon.link", "https://filemoon.sx")
+        .replaceFirst("https://sblona.com", "https://watchsb.com")
+        .replaceFirst("https://lulu.st", "https://lulustream.com")
+        .replaceFirst("https://uqload.io", "https://uqload.com")
+        .replaceFirst("https://do7go.com", "https://dood.la")
 }
