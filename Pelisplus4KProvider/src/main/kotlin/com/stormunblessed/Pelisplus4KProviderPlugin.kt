@@ -10,6 +10,8 @@ class Pelisplus4KProviderPlugin: Plugin() {
         // All providers should be added in this manner. Please don't edit the providers list directly.
         registerMainAPI(Pelisplus4KProvider())
         registerExtractorAPI(PelisplusUpnsPro())
+        registerExtractorAPI(PelisplusUpnsPro2())
+        registerExtractorAPI(PelisplusUpnsPro3())
         registerExtractorAPI(EmturbovidCom())
     }
 }
