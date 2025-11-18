@@ -60,21 +60,23 @@ class LACartoonsProvider:MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse? {
+        val regexep = Regex("Capitulo.(\\d+)|Capitulo.(\\d+)\\-")
         val doc = app.get(url).document
-
-        val title = doc.selectFirst("h2.text-center")?.text()
+        val title = doc.selectFirst("h2.text-center")?.ownText()
+        val tags = doc.selectFirst("h2.text-center span")?.text()?.let { listOf<String>(it) } ?: emptyList()
         val description = doc.selectFirst(".informacion-serie-seccion p:contains(Reseña)")?.text()?.substringAfter("Reseña:")?.trim()
         val poster = doc.selectFirst(".imagen-serie img")?.attr("src")
         val backposter = doc.selectFirst("img.fondo-serie-seccion")?.attr("src")
         val episodes = doc.select("ul.listas-de-episodion li").map {
-            val regexep = Regex("Capitulo.(\\d+)|Capitulo.(\\d+)\\-")
             val href = it.selectFirst("a")?.attr("href")
-            val name = it.selectFirst("a")?.text()?.replace(regexep, "")?.replace("-","")
+            val title = it.selectFirst("a")?.text()
+            val name = title?.substringAfter("- ")
             val seasonnum = href?.substringAfter("t=")
-            val epnum = regexep.find(name.toString())?.destructured?.component1()
+            val epnum = regexep.find(title!!)?.destructured?.component1()
             newEpisode(
                 fixUrl(href!!),
             ){
+                this.name = name
                 this.season = seasonnum.toString().toIntOrNull()
                 this.episode = epnum.toString().toIntOrNull()
             }
@@ -85,6 +87,7 @@ class LACartoonsProvider:MainAPI() {
             this.backgroundPosterUrl = fixUrl(backposter!!)
             this.plot = description
             this.recommendations = recommendations
+            this.tags = tags
         }
     }
 
