@@ -31,9 +31,10 @@ import java.net.URL
 import java.util.Calendar
 
 
-class FutbolLibreTVProvider : MainAPI() {
-    override var mainUrl = "https://futbollibre-tv.su"
-    override var name = "FutbolLibreTV"
+class DeporTVProvider : MainAPI() {
+    override var mainUrl = ""
+    val mainUrls: List<String> = listOf("https://rusticotv.top", "https://futbollibre-tv.su")
+    override var name = "DeporTV"
     override var lang = "mx"
     override val hasMainPage = true
     override val hasChromecastSupport = true
@@ -43,7 +44,7 @@ class FutbolLibreTVProvider : MainAPI() {
         TvType.Live
     )
     val streamedInfo: StreamedInfo = StreamedInfo()
-    val defaultPoster = "https://ww.futbollibre-tv.su/favicon/android-icon-192x192.png"
+    val defaultPoster = "https://new.tvpublica.com.ar/wp-content/uploads/2021/05/DeporTVOK.jpg"
 
     override val mainPage = mainPageOf(
         "es/agenda/" to "Agenda",
@@ -51,25 +52,41 @@ class FutbolLibreTVProvider : MainAPI() {
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         streamedInfo.init()
-        val document = app.get(
-            "$mainUrl/${request.data}",
-            headers = mapOf("X-Timezone" to "America/Mexico_City")
-        ).document
-        val home = document.select(".menu > li")
-            .mapNotNull { it.toSearchResult() }
-        val live = home.filter { isEventLive(it.name.take(5)) }
+        val agendaData = mainUrls.map {
+            val url = it
+            val document = app.get(
+                url
+                    .replaceFirst("https://rusticotv.top", "https://rusticotv.top/agenda.html")
+                    .replaceFirst("https://futbollibre-tv.su", "https://futbollibre-tv.su/es/agenda/")
+            ).document
+            document.select(".menu > li")
+                .mapNotNull { it.toEventData(url) }
+        }.flatten();
+
+        val mergedEvents: List<EventData> = agendaData
+            .groupBy { it.title.substringAfter(":").trim() }
+            .map { (title, events) ->
+                EventData(
+                    title = title,
+                    hour = events.first().hour,
+                    urls = events.flatMap { it.urls }.distinct(),
+                    poster = events.first().poster
+                )
+            }.sortedBy { it.hour.substringBefore(":").toIntOrNull() }
+
+        val live = mergedEvents.filter { isEventLive(it.hour) }
         val items = ArrayList<HomePageList>()
         items.add(
             HomePageList(
                 name = "En Vivo",
-                list = live,
+                list = live.map { it.toSearchResult() },
                 isHorizontalImages = true
             )
         )
         items.add(
             HomePageList(
                 name = request.name,
-                list = home,
+                list = mergedEvents.map { it.toSearchResult() },
                 isHorizontalImages = true
             )
         )
@@ -79,33 +96,39 @@ class FutbolLibreTVProvider : MainAPI() {
         )
     }
 
-    private fun Element.toSearchResult(): SearchResponse? {
+    private fun Element.toEventData(mainUrl: String): EventData? {
         val titleElement = this.selectFirst("a")
         val matchTitle = titleElement?.ownText() ?: ""
         if (matchTitle.startsWith("Zapping Sports"))
             return null
         val hour = titleElement?.selectFirst("span")?.text() ?: "00:00"
         val hourLocal = transformHourToLocal(hour)
-        val title = "$hourLocal $matchTitle"
         val urls = this.select("ul li").mapNotNull {
             it.selectFirst("a")?.attr("href")?.replaceFirst("^/".toRegex(), "$mainUrl/")
         }
         val posterUrl = streamedInfo.searchPosterByTitle(matchTitle) ?: defaultPoster
+        return EventData(matchTitle, hourLocal, urls, posterUrl)
+    }
+
+    private fun EventData.toSearchResult(): SearchResponse {
+        val title = "${this.hour} ${this.title}"
+        val posterUrl = this.poster
         return newLiveSearchResponse(
             title,
-            EventData(title, urls, posterUrl).toJson(),
+            this.toJson(),
             TvType.Live
         ) {
             this.posterUrl = posterUrl
         }
     }
 
-    override suspend fun search(query: String): List<SearchResponse> {
-        val document = app.get("${mainUrl}/?s=$query").document
-        val results =
-            document.select("div.container div.card__cover").mapNotNull { it.toSearchResult() }
-        return results
-    }
+
+//    override suspend fun search(query: String): List<SearchResponse> {
+//        val document = app.get("${mainUrl}/?s=$query").document
+//        val results =
+//            document.select("div.container div.card__cover").mapNotNull { it.toSearchResult() }
+//        return results
+//    }
 
     override suspend fun load(data: String): LoadResponse? {
         val eventData = AppUtils.tryParseJson<EventData>(data)
@@ -129,12 +152,15 @@ class FutbolLibreTVProvider : MainAPI() {
             val frame = base64Decode(
                 it.substringAfter("?r=")
             )
-            if (frame.contains("?stream=")) {
+                .replaceFirst("https://vivolibre.org/global1.php?stream=", "https://streamtpcloud.com/global1.php?stream=")
+                .replaceFirst("https://librefutbolhd.su/embed/canales.php?stream=", "https://futbollibrelibre.com/canales.php?stream=")
+            Log.d("qwerty", "loadLinks: $frame")
+            if (frame.startsWith("https://futbollibrelibre.com")) {
                 val name = frame.substringAfter("?stream=")
                 val url =
                     if (name.startsWith("evento"))
-                        "https://futbollibrelibre.com/tv/canal.php?stream=$name"
-                    else "https://futbollibrelibre.com/canales.php?stream=$name"
+                        frame.replace("/canales.php?", "/tv/canal.php?")
+                    else frame
                 val doc = app.get(url, referer = url).document
                 val link =
                     doc.select("script").firstOrNull { it.data().contains("var playbackURL = ") }
@@ -150,9 +176,12 @@ class FutbolLibreTVProvider : MainAPI() {
                             this.quality = Qualities.Unknown.value
                         }
                     )
-            } else if (frame.contains(".php?channel=")) {
+            } else if (frame.contains("global1.php?")) {
+//              https://streamvv33.lat/global1.php?channel=
+//                https://streamtpcloud.com/global1.php?stream=
                 val source = URL(frame).host
-                val name = frame.substringAfter(".php?channel=")
+                val chanelNameParameter = frame.substringAfter("global1.php?").substringBefore("=")
+                val name = frame.substringAfter(".php?$chanelNameParameter=")
                 val doc = app.get(frame).document
                 var result =
                     doc.select("script").firstOrNull { it.html().contains("playbackURL=") }?.let {
@@ -204,6 +233,7 @@ class FutbolLibreTVProvider : MainAPI() {
 
 data class EventData(
     val title: String,
+    val hour: String,
     val urls: List<String>,
     val poster: String,
 )
@@ -251,18 +281,16 @@ fun fixHostsLinks(url: String): String {
 }
 
 fun transformHourToLocal(hourString: String): String {
-    // Step 1: Parse the input "16:00" as GMT+1
     val inputFormat = SimpleDateFormat("HH:mm", Locale.US)
     inputFormat.timeZone = TimeZone.getTimeZone("GMT+1")
     val date = inputFormat.parse(hourString)
-
-    // Step 2: Format it into the phone's current timezone
     val outputFormat = SimpleDateFormat("HH:mm", Locale.US)
     outputFormat.timeZone = TimeZone.getDefault() // current mobile timezone
     return outputFormat.format(date)
 }
 
 fun isEventLive(startHour: String): Boolean {
+    val fiveMinInMiliseconds = 600000
     val sdf = SimpleDateFormat("HH:mm", Locale.US)
     sdf.timeZone = TimeZone.getDefault() // interpret in local phone timezone
     val parsedDate = sdf.parse(startHour)
@@ -274,6 +302,6 @@ fun isEventLive(startHour: String): Boolean {
     startCal.set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH))
     val endCal = startCal.clone() as Calendar
     endCal.add(Calendar.HOUR_OF_DAY, 2)
-    return now.timeInMillis in startCal.timeInMillis..endCal.timeInMillis
+    return now.timeInMillis in (startCal.timeInMillis- fiveMinInMiliseconds)..endCal.timeInMillis
 }
 

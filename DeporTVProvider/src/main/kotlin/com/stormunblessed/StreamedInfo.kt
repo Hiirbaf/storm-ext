@@ -11,9 +11,26 @@ class StreamedInfo {
         this.matches = res.parsed<MatchesResult>()
     }
 
+    fun String.trimAndClean(): String {
+        return this.replace("-", " ").trim()
+    }
+
     fun searchPosterByTitle(title: String): String? {
-        return this.matches.find {
-            title.trim().contains(it.title.trim(), true)
+        val searchTitle = title.substringAfter(":").trimAndClean().replace(" vs. ", " vs ")
+        val searchHome = searchTitle.substringBefore(" vs ").trimAndClean()
+        val searchAway = searchTitle.substringAfter(" vs ").trimAndClean()
+        return this.matches.firstOrNull {
+            val title = it.title.trimAndClean()
+            val away = it.teams?.away?.name?.trimAndClean() ?: "___"
+            val home = it.teams?.home?.name?.trimAndClean() ?: "___"
+            searchTitle.contains(title, true) ||
+                    title.contains(searchTitle, true) ||
+                    (searchTitle.contains(away, true) &&
+                            searchTitle.contains(home, true)) ||
+                    (away.contains(searchAway, true) &&
+                            home.contains(searchHome, true)) ||
+                    (away.contains(searchHome, true) &&
+                            home.contains(searchAway, true))
         }?.poster?.replaceFirst("^/".toRegex(), "$mainUrl/")
     }
 }

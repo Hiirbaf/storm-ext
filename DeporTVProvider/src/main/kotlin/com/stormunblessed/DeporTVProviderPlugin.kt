@@ -3,12 +3,12 @@ package com.stormunblessed
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
 import android.content.Context
-import com.lagradost.cloudstream3.movieproviders.FutbolLibreTVProvider
+import com.lagradost.cloudstream3.movieproviders.DeporTVProvider
 
 @CloudstreamPlugin
-class FutbolLibreTVProviderPlugin: Plugin() {
+class DeporTVProviderPlugin: Plugin() {
     override fun load(context: Context) {
         // All providers should be added in this manner. Please don't edit the providers list directly.
-        registerMainAPI(FutbolLibreTVProvider())
+        registerMainAPI(DeporTVProvider())
     }
 }

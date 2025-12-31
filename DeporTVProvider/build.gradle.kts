@@ -6,7 +6,7 @@ cloudstream {
     language = "mx"
     // All of these properties are optional, you can safely remove them
 
-    description = "Futbol eventos en vivo. Soccer live events."
+    description = "Deportes eventos en vivo. Sports live events. Futbol. Soccer."
     authors = listOf("redblacker8")
 
     /**
@@ -21,5 +21,5 @@ cloudstream {
         "Live",
     )
 
-    iconUrl = "https://ww.futbollibre-tv.su/favicon/android-icon-192x192.png"
+    iconUrl = "https://yt3.googleusercontent.com/T_d2j2xZMjAxPCehiFR6hAv7jE3swcUzfgV8wCXzv1IL7rCEDv3cgQtIxjdmLVyP6ZrSgIu0nw=s900-c-k-c0x00ffffff-no-rj"
 }
