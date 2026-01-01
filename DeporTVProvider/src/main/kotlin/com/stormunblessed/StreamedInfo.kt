@@ -1,36 +1,46 @@
 package com.stormunblessed
 
 import com.lagradost.cloudstream3.app
+import java.text.Normalizer
+import java.util.Date
 
 class StreamedInfo {
     var mainUrl = "https://streamed.pk"
     var matches: MatchesResult = MatchesResult();
 
     suspend fun init() {
-        val res = app.get("$mainUrl/api/matches/all-today")
+        val res = app.get("$mainUrl/api/matches/all")
         this.matches = res.parsed<MatchesResult>()
     }
 
     fun String.trimAndClean(): String {
-        return this.replace("-", " ").trim()
+        val normalized = Normalizer.normalize(this, Normalizer.Form.NFD)
+        return normalized.replace("\\p{M}+".toRegex(), "").replace("-", " ").trim()
     }
 
-    fun searchPosterByTitle(title: String): String? {
+    fun String.containsAnyWordIgnoreCase(target: String): Boolean {
+        val sourceWords = this.lowercase().split("\\s+".toRegex()).toSet()
+        val targetWords = target.lowercase().split("\\s+".toRegex()).toSet()
+        return sourceWords.intersect(targetWords).isNotEmpty()
+    }
+
+    fun searchPosterByDateAndTitle(date: Date, title: String): String? {
+        val epochTime = date.time
         val searchTitle = title.substringAfter(":").trimAndClean().replace(" vs. ", " vs ")
         val searchHome = searchTitle.substringBefore(" vs ").trimAndClean()
         val searchAway = searchTitle.substringAfter(" vs ").trimAndClean()
-        return this.matches.firstOrNull {
+        return this.matches.filter { epochTime == it.date }.firstOrNull {
             val title = it.title.trimAndClean()
             val away = it.teams?.away?.name?.trimAndClean() ?: "___"
             val home = it.teams?.home?.name?.trimAndClean() ?: "___"
-            searchTitle.contains(title, true) ||
+            (searchTitle.contains(title, true) ||
                     title.contains(searchTitle, true) ||
-                    (searchTitle.contains(away, true) &&
-                            searchTitle.contains(home, true)) ||
-                    (away.contains(searchAway, true) &&
-                            home.contains(searchHome, true)) ||
-                    (away.contains(searchHome, true) &&
-                            home.contains(searchAway, true))
+                    (searchTitle.containsAnyWordIgnoreCase(away) ||
+                            searchTitle.containsAnyWordIgnoreCase(home)) ||
+                    (away.containsAnyWordIgnoreCase(searchAway) ||
+                            home.containsAnyWordIgnoreCase(searchHome)) ||
+                    (away.containsAnyWordIgnoreCase(searchHome) ||
+                            home.containsAnyWordIgnoreCase(searchAway)))
         }?.poster?.replaceFirst("^/".toRegex(), "$mainUrl/")
     }
 }
