@@ -187,20 +187,22 @@ class SeriesMetroProvider: MainAPI() {
         dataop.amap { (framelink, suffix) ->
             val response = app.get(framelink, headers = mapOf("Referer" to data)).document
             val trueembedlink = response.select(".Video iframe").attr("src")
+            val links = mutableListOf<ExtractorLink>()
             loadExtractor(trueembedlink, data, subtitleCallback) { link ->
-                callback(
-                    newExtractorLink(
-                        source = link.source,
-                        name = link.name + suffix,
-                        url = link.url,
-                        type = link.type
-                    ) {
-                        this.referer = link.referer
-                        this.quality = link.quality
-                        this.headers = link.headers
-                        this.extractorData = link.extractorData
-                    }
-                )
+                links.add(link)
+            }
+            links.forEach { link ->
+                callback(newExtractorLink(
+                    source = link.source,
+                    name = link.name + suffix,
+                    url = link.url,
+                    type = link.type
+                ) {
+                    this.referer = link.referer
+                    this.quality = link.quality
+                    this.headers = link.headers
+                    this.extractorData = link.extractorData
+                })
             }
         }
         return true
