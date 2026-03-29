@@ -182,6 +182,13 @@ class SeriesMetroProvider: MainAPI() {
         val dataop = soup.select("aside#aa-options div.video").mapNotNull { div ->
             val framelink = fixUrlNull(div.select("iframe").attr("data-src")) ?: return@mapNotNull null
             Pair(framelink, langMap[div.attr("id")] ?: "")
+        }.sortedBy { (_, suffix) ->
+            when (suffix) {
+                " [Lat]" -> 0
+                " [Cas]" -> 1
+                " [VOSE]" -> 2
+                else -> 3
+            }
         }
 
         dataop.amap { (framelink, suffix) ->
