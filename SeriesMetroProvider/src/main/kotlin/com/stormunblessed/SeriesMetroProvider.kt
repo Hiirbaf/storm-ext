@@ -167,14 +167,33 @@ class SeriesMetroProvider: MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val soup = app.get(data).document
-        val dataop = soup.select("aside#aa-options div.video").mapNotNull { fixUrlNull(it.select("iframe").attr("data-src")) }.toList()
-        dataop.amap { framelink ->
-                val response = app.get(framelink, headers = mapOf(
-                    "Referer" to data,
-                )).document
-                val trueembedlink = response.select(".Video iframe").attr("src")
-                loadExtractor(trueembedlink, subtitleCallback, callback)
 
+        // Mapeamos options-N -> sufijo de idioma
+        val langMap = soup.select("ul.aa-tbs-video li a").associate { btn ->
+            val optionId = btn.attr("href").removePrefix("#") // "options-0", "options-1", etc.
+            val langText = btn.selectFirst("span.server")?.text()?.trim() ?: ""
+            val suffix = when {
+                langText.contains("latino", ignoreCase = true) -> " [Lat]"
+                langText.contains("castellano", ignoreCase = true) -> " [Cas]"
+                langText.contains("vose", ignoreCase = true) -> " [VOSE]"
+                else -> ""
+            }
+            optionId to suffix
+        }
+
+        val dataop = soup.select("aside#aa-options div.video").mapNotNull { div ->
+            val optionId = div.attr("id") // "options-0", "options-1", etc.
+            val framelink = fixUrlNull(div.select("iframe").attr("data-src")) ?: return@mapNotNull null
+            val suffix = langMap[optionId] ?: ""
+            Pair(framelink, suffix)
+        }
+
+        dataop.amap { (framelink, suffix) ->
+            val response = app.get(framelink, headers = mapOf("Referer" to data)).document
+            val trueembedlink = response.select(".Video iframe").attr("src")
+            loadExtractor(trueembedlink, subtitleCallback) { link ->
+                callback(link.copy(name = link.name + suffix))
+            }
         }
         return true
     }
