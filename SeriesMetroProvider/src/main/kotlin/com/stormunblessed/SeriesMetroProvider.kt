@@ -1,10 +1,8 @@
 package com.stormunblessed
 
-import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
-import kotlin.math.log
 
 class SeriesMetroProvider: MainAPI() {
     override var mainUrl = "https://www3.seriesmetro.net"
@@ -168,9 +166,8 @@ class SeriesMetroProvider: MainAPI() {
     ): Boolean {
         val soup = app.get(data).document
 
-        // Mapeamos options-N -> sufijo de idioma
         val langMap = soup.select("ul.aa-tbs-video li a").associate { btn ->
-            val optionId = btn.attr("href").removePrefix("#") // "options-0", "options-1", etc.
+            val optionId = btn.attr("href").removePrefix("#")
             val langText = btn.selectFirst("span.server")?.text()?.trim() ?: ""
             val suffix = when {
                 langText.contains("latino", ignoreCase = true) -> " [Lat]"
@@ -181,14 +178,10 @@ class SeriesMetroProvider: MainAPI() {
             optionId to suffix
         }
 
-        val dataop = soup.select("aside#aa-options div.video").mapNotNull { div ->
-            val optionId = div.attr("id") // "options-0", "options-1", etc.
+        soup.select("aside#aa-options div.video").mapNotNull { div ->
             val framelink = fixUrlNull(div.select("iframe").attr("data-src")) ?: return@mapNotNull null
-            val suffix = langMap[optionId] ?: ""
-            Pair(framelink, suffix)
-        }
-
-        dataop.amap { (framelink, suffix) ->
+            Pair(framelink, langMap[div.attr("id")] ?: "")
+        }.amap { (framelink, suffix) ->
             val response = app.get(framelink, headers = mapOf("Referer" to data)).document
             val trueembedlink = response.select(".Video iframe").attr("src")
             loadExtractor(trueembedlink, subtitleCallback) { link ->
