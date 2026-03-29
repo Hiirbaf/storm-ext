@@ -188,16 +188,17 @@ class SeriesMetroProvider: MainAPI() {
             val trueembedlink = response.select(".Video iframe").attr("src")
             loadExtractor(trueembedlink, data, subtitleCallback) { link ->
                 callback(
-                    ExtractorLink(
+                    newExtractorLink(
                         source = link.source,
                         name = link.name + suffix,
                         url = link.url,
-                        referer = link.referer,
-                        quality = link.quality,
-                        isM3u8 = link.isM3u8,
-                        headers = link.headers,
-                        extractorData = link.extractorData
-                    )
+                        type = link.type
+                    ) {
+                        this.referer = link.referer
+                        this.quality = link.quality
+                        this.headers = link.headers
+                        this.extractorData = link.extractorData
+                    }
                 )
             }
         }
