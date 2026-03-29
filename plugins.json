@@ -1,0 +1,609 @@
+[
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=animeflv.io&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 20604,
+        "status": 0,
+        "language": "es",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Anime",
+            "OVA"
+        ],
+        "version": 2,
+        "internalName": "AnimeflvIOProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/AnimeflvIOProvider.cs3",
+        "name": "AnimeflvIOProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=animeflv.net&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 19759,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Anime",
+            "OVA"
+        ],
+        "version": 6,
+        "internalName": "AnimeflvProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/AnimeflvProvider.cs3",
+        "name": "AnimeflvProvider"
+    },
+    {
+        "iconUrl": "https://www.anime-jl.net/favicon.ico",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 41424,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "misajimenezmx"
+        ],
+        "tvTypes": [
+            "Anime"
+        ],
+        "version": 4,
+        "internalName": "AnimeJlProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/AnimeJlProvider.cs3",
+        "name": "AnimeJlProvider"
+    },
+    {
+        "iconUrl": "https://www.cablevisionhd.com/imge/cablevisionhd.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 18317,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "misajimenezmx"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 5,
+        "internalName": "CablevisionHdProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/CablevisionHdProvider.cs3",
+        "name": "CablevisionHdProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=cinecalidad.lol&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 17373,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 7,
+        "internalName": "CinecalidadProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/CinecalidadProvider.cs3",
+        "name": "CinecalidadProvider"
+    },
+    {
+        "iconUrl": "https://cinehdplus.org/wp-content/uploads/2021/11/favicon.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 19831,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "redblacker8"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 2,
+        "internalName": "CineHdPlusProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/CineHdPlusProvider.cs3",
+        "name": "CineHdPlusProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=comamosramen.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 38117,
+        "status": 0,
+        "language": "es",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "AsianDrama"
+        ],
+        "version": 3,
+        "internalName": "ComamosRamenProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/ComamosRamenProvider.cs3",
+        "name": "ComamosRamenProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=cuevana3.me&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 26206,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 13,
+        "internalName": "CuevanaProvider",
+        "description": "La clasica pagina de peliculas y series.",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/CuevanaProvider.cs3",
+        "name": "CuevanaProvider"
+    },
+    {
+        "iconUrl": "https://yt3.googleusercontent.com/T_d2j2xZMjAxPCehiFR6hAv7jE3swcUzfgV8wCXzv1IL7rCEDv3cgQtIxjdmLVyP6ZrSgIu0nw=s900-c-k-c0x00ffffff-no-rj",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 57797,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "redblacker8"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 8,
+        "internalName": "DeporTVProvider",
+        "description": "Deportes eventos en vivo. Sports live events. Futbol. Soccer.",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/DeporTVProvider.cs3",
+        "name": "DeporTVProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=doramasflix.co&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 39203,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "AsianDrama"
+        ],
+        "version": 7,
+        "internalName": "DoramasFlixProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/DoramasFlixProvider.cs3",
+        "name": "DoramasFlixProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=doramasyt.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 19187,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "AsianDrama"
+        ],
+        "version": 6,
+        "internalName": "DoramasYTProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/DoramasYTProvider.cs3",
+        "name": "DoramasYTProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=entrepeliculasyseries.nz&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 24760,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 9,
+        "internalName": "EntrepeliculasyseriesProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/EntrepeliculasyseriesProvider.cs3",
+        "name": "EntrepeliculasyseriesProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=estrenosdoramas.net&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 21281,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "AsianDrama"
+        ],
+        "version": 3,
+        "internalName": "EstrenosDoramasProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/EstrenosDoramasProvider.cs3",
+        "name": "EstrenosDoramasProvider"
+    },
+    {
+        "iconUrl": "https://hdfullcdn.cc/favicon.ico",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 25349,
+        "status": 1,
+        "language": "es",
+        "authors": [
+            "redblacker8"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 4,
+        "internalName": "HDFullProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/HDFullProvider.cs3",
+        "name": "HDFullProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=jkanime.net&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 33550,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Anime",
+            "OVA"
+        ],
+        "version": 9,
+        "internalName": "JKAnimeProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/JKAnimeProvider.cs3",
+        "name": "JKAnimeProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=lacartoons.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 15321,
+        "status": 1,
+        "language": "es",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Cartoons",
+            "TvSeries"
+        ],
+        "version": 5,
+        "internalName": "LACartoonsProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/LACartoonsProvider.cs3",
+        "name": "LACartoonsProvider"
+    },
+    {
+        "iconUrl": "https://latanime.org/public/img/logito.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 13728,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "misajimenezmx"
+        ],
+        "tvTypes": [
+            "Anime",
+            "OVA"
+        ],
+        "version": 4,
+        "internalName": "LatAnimeProvider",
+        "description": "Anime en latino y subtitulado.",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/LatAnimeProvider.cs3",
+        "name": "LatAnimeProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=monoschinos2.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 18152,
+        "status": 0,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Anime",
+            "OVA"
+        ],
+        "version": 7,
+        "internalName": "MonoschinosProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/MonoschinosProvider.cs3",
+        "name": "MonoschinosProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=mundodonghua.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 21334,
+        "status": 1,
+        "language": "es",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Anime",
+            "OVA",
+            "AnimeMovie"
+        ],
+        "version": 3,
+        "internalName": "MundoDonghuaProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/MundoDonghuaProvider.cs3",
+        "name": "MundoDonghuaProvider"
+    },
+    {
+        "iconUrl": "https://peliculasflix.co/img/logo.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 24580,
+        "status": 0,
+        "language": "es",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "PeliculasFlixProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/PeliculasFlixProvider.cs3",
+        "name": "PeliculasFlixProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=pelispedia.is&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 16630,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 7,
+        "internalName": "PelispediaProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/PelispediaProvider.cs3",
+        "name": "PelispediaProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=pelisplus.to&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 42381,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "AsianDrama",
+            "Anime"
+        ],
+        "version": 12,
+        "internalName": "Pelisplus4KProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/Pelisplus4KProvider.cs3",
+        "name": "Pelisplus4KProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=pelisplushd.nu&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 24895,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 9,
+        "internalName": "PelisplusHDProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/PelisplusHDProvider.cs3",
+        "name": "PelisplusHDProvider"
+    },
+    {
+        "iconUrl": "https://pelis-plus.icu/assets/img/ic/favicon-96x96.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 25886,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "redblacker8"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 5,
+        "internalName": "PelisplusOrgProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/PelisplusOrgProvider.cs3",
+        "name": "PelisplusOrgProvider"
+    },
+    {
+        "iconUrl": "https://playdede.in/public/assets/favicon.ico",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 15671,
+        "status": 1,
+        "language": "es",
+        "authors": [
+            "redblacker8"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 2,
+        "internalName": "PlaydedeProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/PlaydedeProvider.cs3",
+        "name": "PlaydedeProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=playhublite.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 37655,
+        "status": 0,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "PlayhubProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/PlayhubProvider.cs3",
+        "name": "PlayhubProvider"
+    },
+    {
+        "iconUrl": "https://reydonghua.org/public/favicon.ico?v=4.71",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 16733,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "redblacker8"
+        ],
+        "tvTypes": [
+            "Anime"
+        ],
+        "version": 2,
+        "internalName": "ReyDonghuaProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/ReyDonghuaProvider.cs3",
+        "name": "ReyDonghuaProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=seriesflix.video&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 15108,
+        "status": 0,
+        "language": "es",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 2,
+        "internalName": "SeriesflixProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/SeriesflixProvider.cs3",
+        "name": "SeriesflixProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=seriesmetro.net&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 20357,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 6,
+        "internalName": "SeriesMetroProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/SeriesMetroProvider.cs3",
+        "name": "SeriesMetroProvider"
+    },
+    {
+        "iconUrl": "https://sololatino.net/wp-content/uploads/2020/10/cropped-logo-final-192x192.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 26742,
+        "status": 1,
+        "language": "mx",
+        "authors": [
+            "misajimenezmx"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "Anime",
+            "Cartoon"
+        ],
+        "version": 6,
+        "internalName": "SoloLatinoProvider",
+        "description": "Peliculas, series, animes y cartoons en Espa\u00f1ol y Espa\u00f1ol Latio",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/SoloLatinoProvider.cs3",
+        "name": "SoloLatinoProvider"
+    },
+    {
+        "iconUrl": "https://streamed.pk/favicon.png",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 26474,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "redblacker8"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 1,
+        "internalName": "StreamedProvider",
+        "description": "Multilang live sports",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/StreamedProvider.cs3",
+        "name": "StreamedProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=tioanime.com&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Hiirbaf/storm-ext",
+        "fileSize": 17724,
+        "status": 1,
+        "language": "es",
+        "authors": [
+            "Stormunblessed"
+        ],
+        "tvTypes": [
+            "Anime",
+            "OVA"
+        ],
+        "version": 3,
+        "internalName": "TioAnimeProvider",
+        "url": "https://raw.githubusercontent.com/Hiirbaf/storm-ext/builds/TioAnimeProvider.cs3",
+        "name": "TioAnimeProvider"
+    }
+]
