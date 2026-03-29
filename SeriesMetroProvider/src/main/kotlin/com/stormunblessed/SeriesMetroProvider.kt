@@ -178,14 +178,27 @@ class SeriesMetroProvider: MainAPI() {
             optionId to suffix
         }
 
-        soup.select("aside#aa-options div.video").mapNotNull { div ->
+        val dataop = soup.select("aside#aa-options div.video").mapNotNull { div ->
             val framelink = fixUrlNull(div.select("iframe").attr("data-src")) ?: return@mapNotNull null
             Pair(framelink, langMap[div.attr("id")] ?: "")
-        }.amap { (framelink, suffix) ->
+        }
+
+        dataop.amap { (framelink, suffix) ->
             val response = app.get(framelink, headers = mapOf("Referer" to data)).document
             val trueembedlink = response.select(".Video iframe").attr("src")
-            loadExtractor(trueembedlink, subtitleCallback) { link ->
-                callback(link.copy(name = link.name + suffix))
+            loadExtractor(trueembedlink, data, subtitleCallback) { link ->
+                callback(
+                    ExtractorLink(
+                        source = link.source,
+                        name = link.name + suffix,
+                        url = link.url,
+                        referer = link.referer,
+                        quality = link.quality,
+                        isM3u8 = link.isM3u8,
+                        headers = link.headers,
+                        extractorData = link.extractorData
+                    )
+                )
             }
         }
         return true
