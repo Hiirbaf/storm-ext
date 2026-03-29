@@ -169,7 +169,7 @@ class SeriesMetroProvider: MainAPI() {
 
         val langMap = soup.select("ul.aa-tbs-video li a").associate { btn ->
             val optionId = btn.attr("href").removePrefix("#")
-            val langText = btn.selectFirst("span.server")?.text()?.trim() ?: ""
+            val langText = btn.selectFirst("span.server")?.text()?.trim()?.removePrefix("-")?.trim() ?: ""
             val suffix = when {
                 langText.contains("latino", ignoreCase = true) -> " [Lat]"
                 langText.contains("castellano", ignoreCase = true) -> " [Cas]"
