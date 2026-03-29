@@ -3,6 +3,7 @@ package com.stormunblessed
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.loadExtractor
+import com.lagradost.cloudstream3.utils.newExtractorLink
 
 class SeriesMetroProvider: MainAPI() {
     override var mainUrl = "https://www3.seriesmetro.net"
